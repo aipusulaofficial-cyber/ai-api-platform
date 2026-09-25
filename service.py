@@ -5,7 +5,7 @@ import uuid
 from fastapi import FastAPI, HTTPException
 from fastapi import Request as FastAPIRequest
 from opentelemetry import trace
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from api_domain import validate_version
 
@@ -26,7 +26,7 @@ tracer = trace.get_tracer("ai-api-platform")
 
 class Request(BaseModel):
     key: str
-    payload: dict = {}
+    payload: dict = Field(default_factory=dict)
 
 
 @app.middleware("http")
