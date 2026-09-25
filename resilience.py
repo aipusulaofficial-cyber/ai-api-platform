@@ -4,7 +4,7 @@ from __future__ import annotations
 import random, threading, time
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from dataclasses import dataclass
-from typing import Callable, Generic, TypeVar
+from typing import Callable
 
 T = TypeVar("T")
 
@@ -69,7 +69,7 @@ class CircuitBreaker:
                 self._opened_at = time.monotonic()
 
 
-class BoundedExecutor(Generic[T]):
+class BoundedExecutor[T]:
     def __init__(self, limit: int):
         if limit < 1:
             raise ValueError("limit must be positive")
