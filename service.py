@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from opentelemetry import trace
@@ -11,8 +13,8 @@ try:
     p = TracerProvider(resource=Resource.create({"service.name": "ai-api-platform"}))
     p.add_span_processor(BatchSpanProcessor(ConsoleSpanExporter()))
     trace.set_tracer_provider(p)
-except Exception:
-    pass
+except (ImportError, RuntimeError) as exc:
+    logging.getLogger(__name__).warning("OpenTelemetry setup unavailable: %s", exc)
 app = FastAPI(title="ai-api-platform", version="1.0.0")
 tracer = trace.get_tracer("ai-api-platform")
 
