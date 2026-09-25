@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from opentelemetry import trace
 from pydantic import BaseModel
 
-from api_domain import *
+from api_domain import validate_version
 
 try:
     from opentelemetry.sdk.resources import Resource
