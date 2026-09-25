@@ -1,4 +1,4 @@
-from api_domain import *
+from api_domain import TokenBucket, validate_version
 
 
 def test_version_bucket():
