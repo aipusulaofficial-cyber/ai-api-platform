@@ -5,7 +5,7 @@ jobs:
  scan:
   runs-on: ubuntu-24.04
   steps:
-  - uses: actions/checkout@v5
+  - uses: actions/checkout@v7
   - uses: aquasecurity/trivy-action@v0.36.0
     with: {scan-type: fs, scan-ref: ., exit-code: "1", ignore-unfixed: true}
   - uses: anchore/sbom-action@v0.20.0
