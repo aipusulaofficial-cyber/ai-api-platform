@@ -1,8 +1,9 @@
 import logging
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 from opentelemetry import trace
+from pydantic import BaseModel
+
 from api_domain import *
 
 try:

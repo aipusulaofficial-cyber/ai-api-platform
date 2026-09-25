@@ -1,4 +1,7 @@
-import json, logging, os
+import json
+import logging
+import os
+
 from opentelemetry import trace
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider

@@ -1,7 +1,7 @@
 """Versioned AI API contract with authentication and deterministic throttling."""
 
-from dataclasses import dataclass
 import time
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)

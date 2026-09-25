@@ -1,5 +1,6 @@
-from api_platform import *
 import pytest
+
+from api_platform import *
 
 
 def test_authenticated_versioned_request():
