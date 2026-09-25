@@ -6,7 +6,6 @@ from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from dataclasses import dataclass
 from typing import Callable
 
-T = TypeVar("T")
 
 
 class CircuitOpenError(RuntimeError):
