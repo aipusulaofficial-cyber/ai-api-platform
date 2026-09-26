@@ -11,7 +11,7 @@ class SharedWindowLimiter:
         self.limit = limit
         self.window_s = window_s
         self._lock = RLock()
-        self._hits = {}
+        self._hits: dict[str, list[float]] = {}
 
     def allow(self, key: str, now: float | None = None) -> bool:
         if not key:
