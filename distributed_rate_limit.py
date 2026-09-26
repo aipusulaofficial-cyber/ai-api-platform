@@ -18,9 +18,7 @@ class SharedWindowLimiter:
             raise ValueError("key required")
         current = time.monotonic() if now is None else now
         with self._lock:
-            hits = [
-                t for t in self._hits.get(key, []) if current - t < self.window_s
-            ]
+            hits = [t for t in self._hits.get(key, []) if current - t < self.window_s]
             if len(hits) >= self.limit:
                 self._hits[key] = hits
                 return False
