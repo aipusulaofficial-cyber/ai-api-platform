@@ -1,29 +1,37 @@
 # AI API Platform
 
-**Principal-level reference implementation** focused on contract-first APIs, validation, versioning boundaries, safe defaults, and operational reliability.
+A contract-first API service for AI workloads, built around explicit validation, version boundaries, normalized failures and operational health signals.
 
-## Engineering intent
-- Clear domain boundaries and replaceable infrastructure adapters
-- Explicit contracts, validation, and failure semantics
-- Deterministic tests with external dependencies isolated
-- Operational readiness through health checks, CI, and security validation
-- Architecture decisions documented so trade-offs are reviewable
+## What this project does
+The service validates API requests at the boundary, executes domain operations through replaceable adapters, and returns stable response and error contracts.
 
-## System design
-The repository is structured around explicit responsibilities rather than framework-driven coupling. Domain policy, orchestration, infrastructure adapters, and operational concerns remain separable so components can evolve independently.
+## Runtime architecture
+```text
+Client
+  -> API boundary / validation
+  -> domain service
+  -> infrastructure adapters
+  -> response contract
+```
 
-## Quality bar
-- **Correctness:** contract, edge-case, and failure-path tests
-- **Reliability:** bounded work, explicit failure behavior, and health signals where applicable
-- **Security:** least-privilege boundaries, input validation, and safe defaults
-- **Observability:** correlation/context propagation and actionable operational signals
-- **Delivery:** reproducible CI validation before changes are considered complete
+Operational endpoints expose separate liveness and readiness signals. Requests carry correlation context so failures can be traced across the service.
 
-## Principal engineering contract
-See [docs/PRINCIPAL-ENGINEERING.md](docs/PRINCIPAL-ENGINEERING.md) for the reviewable engineering contract, NFRs, and change-safety checklist.
+## Contracts
+- Input validation happens before domain execution.
+- API versions have explicit compatibility boundaries.
+- Domain errors are translated into stable transport errors.
+- External dependencies are not part of the public API contract.
+- Malformed, unauthorized and dependency-failure paths are tested.
 
-## Architecture & decisions
-See [ARCHITECTURE.md](ARCHITECTURE.md) and the ADRs directory for system boundaries, key trade-offs, and extension points.
+## Runtime & deployment
+The container runs as non-root user `10001`, exposes port `8000`, and includes a live healthcheck. Kubernetes deployment uses two replicas with readiness and liveness probes.
 
-## Engineering principle
-The goal is to make important behavior **explicit, testable, observable, auditable, and replaceable** without adding complexity that does not buy a measurable engineering property.
+The deployment manifest currently uses an image tag of `latest`; production promotion should use immutable release identifiers.
+
+## Quality gates
+CI, production tests and security/SBOM validation run on changes. The repository demonstrates an executable API lifecycle rather than a documentation-only architecture.
+
+## Evidence
+- Architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
+- Engineering contract: [docs/PRINCIPAL-ENGINEERING.md](docs/PRINCIPAL-ENGINEERING.md)
+- Deployment: [deploy/kubernetes.yaml](deploy/kubernetes.yaml)
