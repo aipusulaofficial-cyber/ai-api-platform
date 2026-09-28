@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from opentelemetry import trace
@@ -37,7 +37,7 @@ def runtime_evidence(
         "trace_id": trace_id_from_context(),
         "stage": stage,
         "decision": decision,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": datetime.now(UTC).isoformat(),
         "latency_ms": round((time.perf_counter() - started) * 1000, 3),
         "error": error,
         "cost_usd": cost_usd,
