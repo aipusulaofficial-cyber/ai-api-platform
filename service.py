@@ -17,9 +17,7 @@ try:
     p.add_span_processor(BatchSpanProcessor(ConsoleSpanExporter()))
     trace.set_tracer_provider(p)
 except (ImportError, RuntimeError) as exc:
-    logging.getLogger(__name__).warning(
-        "OpenTelemetry setup unavailable: %s", exc
-    )
+    logging.getLogger(__name__).warning("OpenTelemetry setup unavailable: %s", exc)
 
 app = FastAPI(title="ai-api-platform", version="1.0.0")
 tracer = trace.get_tracer("ai-api-platform")
