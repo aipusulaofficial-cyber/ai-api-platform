@@ -15,6 +15,6 @@ jobs:
   contract:
     uses: aipusulaofficial-cyber/aipusulaofficial-cyber/.github/workflows/reusable-engineering-contract.yml@main
     with:
-      python-version: "3.11"
+      python-version: "3.12"
       run-tests: true
       run-build: true
