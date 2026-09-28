@@ -4,3 +4,5 @@ runtime: "python-or-node"
 test_command: "auto"
 security_command: "auto"
 observability: "contract-evidence-v1"
+
+# Shared contract suite refreshed.
