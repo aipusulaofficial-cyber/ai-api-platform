@@ -26,7 +26,7 @@ Operational endpoints expose separate liveness and readiness signals. Requests c
 ## Runtime & deployment
 The container runs as non-root user `10001`, exposes port `8000`, and includes a live healthcheck. Kubernetes deployment uses two replicas with readiness and liveness probes.
 
-The deployment manifest currently uses an image tag of `latest`; production promotion should use immutable release identifiers.
+The deployment manifest uses the versioned image tag `0.1.0` and `imagePullPolicy: IfNotPresent`; promotion should replace the tag with an immutable release identifier or digest for a production release.
 
 ## Quality gates
 CI, production tests and security/SBOM validation run on changes. The repository demonstrates an executable API lifecycle rather than a documentation-only architecture.
