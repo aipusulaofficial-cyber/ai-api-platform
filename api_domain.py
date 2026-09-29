@@ -1,5 +1,6 @@
 """API governance primitives: version validation and deterministic token-bucket throttling."""
 
+import math
 import time
 from dataclasses import dataclass
 
@@ -13,7 +14,7 @@ class ApiRequest:
 
 class TokenBucket:
     def __init__(self, capacity: int, refill_per_s: float) -> None:
-        if capacity <= 0 or refill_per_s < 0:
+        if capacity <= 0 or not math.isfinite(refill_per_s) or refill_per_s < 0:
             raise ValueError("invalid token bucket configuration")
         self.capacity = capacity
         self.tokens = float(capacity)
@@ -24,6 +25,8 @@ class TokenBucket:
         if cost < 1:
             raise ValueError("cost must be positive")
         current = time.monotonic() if now is None else now
+        if not math.isfinite(current):
+            raise ValueError("time must be finite")
         if self.last is None:
             self.last = current
         else:
