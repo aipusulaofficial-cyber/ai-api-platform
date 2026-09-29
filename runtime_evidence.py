@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import time
 import uuid
 from datetime import UTC, datetime
@@ -11,7 +12,10 @@ from opentelemetry import trace
 
 
 def request_id_from_headers(headers: Any) -> str:
-    return headers.get("x-request-id") or str(uuid.uuid4())
+    supplied = headers.get("x-request-id")
+    if isinstance(supplied, str) and re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:/-]{0,127}", supplied):
+        return supplied
+    return str(uuid.uuid4())
 
 
 def trace_id_from_context() -> str:
