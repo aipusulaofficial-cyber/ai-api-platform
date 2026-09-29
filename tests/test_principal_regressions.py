@@ -14,6 +14,7 @@ def test_nonfinite_clock_rejected():
     with pytest.raises(ValueError):
         bucket.consume(now=float("nan"))
 
+
 def test_header_request_id_validation():
     from uuid import UUID
 
