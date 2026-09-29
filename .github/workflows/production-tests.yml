@@ -1,5 +1,7 @@
 name: production-tests
 on:
+permissions:
+  contents: read
   push:
   pull_request:
   workflow_dispatch:
