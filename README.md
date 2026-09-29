@@ -35,3 +35,6 @@ CI, production tests and security/SBOM validation run on changes. The repository
 - Architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
 - Engineering contract: [docs/PRINCIPAL-ENGINEERING.md](docs/PRINCIPAL-ENGINEERING.md)
 - Deployment: [deploy/kubernetes.yaml](deploy/kubernetes.yaml)
+
+## Portfolio evidence
+[Portfolio evidence map](docs/PORTFOLIO_EVIDENCE.md) — executable proof, architecture mapping and reviewable CI evidence.
