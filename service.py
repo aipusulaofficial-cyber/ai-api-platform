@@ -4,7 +4,7 @@ import time
 from fastapi import FastAPI, HTTPException
 from fastapi import Request as FastAPIRequest
 from opentelemetry import trace
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from api_domain import validate_version
 from runtime_evidence import request_id_from_headers, runtime_evidence
@@ -25,8 +25,15 @@ tracer = trace.get_tracer("ai-api-platform")
 
 
 class Request(BaseModel):
-    key: str
+    key: str = Field(min_length=1, max_length=128)
     payload: dict = Field(default_factory=dict)
+
+    @field_validator("key")
+    @classmethod
+    def require_nonblank_key(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("key must not be blank")
+        return value
 
 
 @app.middleware("http")
