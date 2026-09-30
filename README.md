@@ -1,5 +1,10 @@
 # AI API Platform
 
+[![CI](https://github.com/aipusulaofficial-cyber/ai-api-platform/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/ai-api-platform/actions/workflows/ci.yml)
+[![Production Tests](https://github.com/aipusulaofficial-cyber/ai-api-platform/actions/workflows/production-tests.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/ai-api-platform/actions/workflows/production-tests.yml)
+[![Security / SBOM](https://github.com/aipusulaofficial-cyber/ai-api-platform/actions/workflows/security-sbom.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/ai-api-platform/actions/workflows/security-sbom.yml)
+
+
 A contract-first API service for AI workloads, built around explicit validation, version boundaries, normalized failures and operational health signals.
 
 ## What this project does
