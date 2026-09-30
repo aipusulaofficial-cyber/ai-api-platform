@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import re
 import time
 import uuid
 from datetime import UTC, datetime
@@ -11,12 +10,16 @@ from typing import Any
 from opentelemetry import trace
 
 
-_REQUEST_ID = re.compile(r"^[A-Za-z0-9_.:-]{1,128}$")
+_REQUEST_ID_CHARS = frozenset("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_.:-")
 
 
 def request_id_from_headers(headers: Any) -> str:
     candidate = headers.get("x-request-id")
-    if isinstance(candidate, str) and _REQUEST_ID.fullmatch(candidate):
+    if (
+        isinstance(candidate, str)
+        and 1 <= len(candidate) <= 128
+        and all(ch in _REQUEST_ID_CHARS for ch in candidate)
+    ):
         return candidate
     return str(uuid.uuid4())
 
