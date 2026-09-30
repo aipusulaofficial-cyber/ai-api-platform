@@ -9,7 +9,6 @@ from typing import Any
 
 from opentelemetry import trace
 
-
 _REQUEST_ID_CHARS = frozenset("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_.:-")
 
 
