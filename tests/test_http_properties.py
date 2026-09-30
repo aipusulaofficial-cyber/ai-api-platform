@@ -13,4 +13,8 @@ def test_contract():
 
 @given(st.text(min_size=1, max_size=32))
 def test_property(v):
-    assert c.post("/v1/api", json={"key": v, "payload": {"version": "v1"}}).status_code == 200
+    response = c.post("/v1/api", json={"key": v, "payload": {"version": "v1"}})
+    if v.strip():
+        assert response.status_code == 200
+    else:
+        assert response.status_code == 422
