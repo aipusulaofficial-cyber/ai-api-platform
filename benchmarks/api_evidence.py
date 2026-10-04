@@ -6,6 +6,8 @@ repeatable CI acceptance benchmark, not a claim about production hardware.
 
 from __future__ import annotations
 
+import contextlib
+import io
 import json
 import statistics
 import time
@@ -70,4 +72,7 @@ def run(requests: int = 200, workers: int = 16) -> dict[str, object]:
 
 
 if __name__ == "__main__":
-    print(json.dumps(run(), sort_keys=True))
+    telemetry = io.StringIO()
+    with contextlib.redirect_stdout(telemetry):
+        report = run()
+    print(json.dumps(report, sort_keys=True))
