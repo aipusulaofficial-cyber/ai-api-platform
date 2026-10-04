@@ -1,4 +1,5 @@
 import logging
+import sys
 import time
 
 from fastapi import FastAPI, HTTPException
@@ -16,7 +17,7 @@ try:
     from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
 
     p = TracerProvider(resource=Resource.create({"service.name": "ai-api-platform"}))
-    p.add_span_processor(BatchSpanProcessor(ConsoleSpanExporter()))
+    p.add_span_processor(BatchSpanProcessor(ConsoleSpanExporter(out=sys.stderr)))
     trace.set_tracer_provider(p)
 except (ImportError, RuntimeError) as exc:
     logging.getLogger(__name__).warning("OpenTelemetry setup unavailable: %s", exc)
