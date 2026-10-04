@@ -12,4 +12,4 @@ dev = ["pytest-cov>=5,<7", "mypy>=1.13,<2", "pytest>=8","hypothesis>=6","ruff>=0
 pythonpath=["."]
 
 [tool.setuptools]
-py-modules=["api_domain","api_platform","distributed_rate_limit","observability","resilience","service"]
+py-modules=["api_domain","api_platform","distributed_rate_limit","observability","resilience","runtime_evidence","service"]
