@@ -23,7 +23,7 @@ jobs:
       - name: Execute domain evidence
         run: |
           mkdir -p artifacts
-          python benchmarks/api_evidence.py | tee artifacts/api-domain-evidence.json
+          python benchmarks/api_evidence.py 2>artifacts/api-domain-telemetry.log | tee artifacts/api-domain-evidence.json
       - name: Validate evidence artifact
         run: python -m json.tool artifacts/api-domain-evidence.json >/dev/null
       - name: Upload domain evidence
