@@ -7,6 +7,7 @@ from opentelemetry import trace
 from pydantic import BaseModel, Field, field_validator
 
 from api_domain import validate_version
+from distributed_rate_limit import SharedWindowLimiter
 from runtime_evidence import request_id_from_headers, runtime_evidence
 
 try:
@@ -22,6 +23,7 @@ except (ImportError, RuntimeError) as exc:
 
 app = FastAPI(title="ai-api-platform", version="1.0.0")
 tracer = trace.get_tracer("ai-api-platform")
+request_limiter = SharedWindowLimiter(limit=60, window_s=60.0)
 
 
 class Request(BaseModel):
@@ -60,6 +62,8 @@ def handle(r: Request, http_request: FastAPIRequest):
     request_id = request_id_from_headers(http_request.headers)
     with tracer.start_as_current_span("ai-api-platform.domain"):
         try:
+            if not request_limiter.allow(r.key):
+                raise HTTPException(status_code=429, detail="rate limit exceeded")
             version = r.payload.get("version", "v1")
             validate_version(version)
             return {
@@ -73,6 +77,8 @@ def handle(r: Request, http_request: FastAPIRequest):
                     started=started,
                 ),
             }
+        except HTTPException:
+            raise
         except (ValueError, KeyError, RuntimeError) as e:
             evidence = runtime_evidence(
                 request_id=request_id,
