@@ -3,6 +3,7 @@
 Exercises the actual FastAPI request path under concurrent load. This is a
 repeatable CI acceptance benchmark, not a claim about production hardware.
 """
+
 from __future__ import annotations
 
 import json
